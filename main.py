@@ -2,7 +2,6 @@ import requests
 from telegram import Bot
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackContext
-from telegram.ext import filters  # Import filters separately for version 0.14.0
 
 # Add your Telegram bot token here
 TELEGRAM_BOT_TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN'
@@ -108,10 +107,14 @@ def main():
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(MessageHandler(filters.Text & ~filters.Command, handle_text))  # Use 'filters' for Text
+    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_text))
 
     updater.start_polling()
 
     try:
         updater.idle()
-    except KeyboardInterrupt
+    except KeyboardInterrupt:
+        print("\nExiting ....")
+
+if __name__ == '__main__':
+    main()
